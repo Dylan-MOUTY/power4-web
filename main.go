@@ -20,6 +20,8 @@ func main() {
 	http.HandleFunc("/play", handlePlay)
 	http.HandleFunc("/reset", handleReset)
 	http.HandleFunc("/restart", handleRestart)
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	log.Println("Serveur lancé sur http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
