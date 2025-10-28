@@ -6,6 +6,23 @@
   <meta charset="UTF-8">
   <title>Styled Link as Button with Background Video</title>
   <style>
+      @font-face {
+         font-family: "Persona Non Grata";
+         src: url("/assets/style/Persona Non Grata.woff2") format("woff2"),
+              url("/assets/style/Persona Non Grata.woff") format("woff"),
+              url("/assets/style/Persona Non Grata.ttf") format("truetype");
+         font-weight: 100 900;
+         font-style: normal;
+         font-display: swap;
+       }
+
+       /* Appliquer la police partout (inclut headings et boutons) */
+       .button-class, body {
+            font-family: "Persona Non Grata", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+       }
+
     /* --- STYLE DE LA VIDÉO DE FOND --- */
     #fondquibrille {
       position: fixed;
