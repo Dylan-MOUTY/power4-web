@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"power4-web/game"
+	"power-4/game"
 )
 
 var currentGame *game.Game
