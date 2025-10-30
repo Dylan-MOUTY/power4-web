@@ -15,7 +15,7 @@ import (
 var currentGame *game.Game
 
 func main() {
-	currentGame = game.NewGame() // par défaut : easy
+	currentGame = game.NewGame(6, 7) // par défaut : easy
 
 	// Routes
 	http.HandleFunc("/", handleIndex)      // Page d'accueil (Page1.html)
@@ -83,7 +83,7 @@ func handlePlay(w http.ResponseWriter, r *http.Request) {
 
 // Bouton "Rejouer"
 func handleReset(w http.ResponseWriter, r *http.Request) {
-	currentGame = game.NewGame()
+	currentGame = game.NewGame(6, 7) // réinitialise une partie facile
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
