@@ -59,7 +59,6 @@
             );
             box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
         }
-        /* petite croix ou icône centrale pour bien montrer le bloc */
         .blocked-mark {
             position: absolute;
             inset: 0;
@@ -93,9 +92,14 @@
         button:focus {
             outline: none;
         }
-
+        h1 {
+            font-size: 4rem;
+            margin: 30px 0 40px;
+            color: #ffffff;
+        }
         h2 {
-            margin: 20px;
+            font-size: 2.5rem;
+            margin: 20px 0 40px;
             color: #ffffff;
         }
 
@@ -138,7 +142,6 @@
         {{range $i, $row := .Board}}
         <tr>
             {{range $j, $cell := $row}}
-                <!-- si cell == 3 => blocked : on affiche la case bloquée sans form -->
                 <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{else if eq $cell 3}}blocked{{end}}">
                     {{if eq $cell 3}}
                         <div class="blocked-mark">✖</div>
