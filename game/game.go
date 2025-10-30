@@ -1,36 +1,42 @@
 package game
 
-import (
-	"math/rand"
-	"time"
-)
-
-const (
-	Empty   = 0
-	Player1 = 1
-	Player2 = 2
-	Blocked = 3 // case pré-remplie / obstacle (ne peut pas être remplacée)
-)
-
 type Game struct {
-	Board         [][]int // 0 = vide, 1 = joueur1, 2 = joueur2
+	Board         [][]int
 	CurrentPlayer int
 	Winner        int
 }
 
+// Fonction appelée par défaut
 func NewGame() *Game {
-	board := make([][]int, 6)
+	return NewGameEasy()
+}
+
+// ---- EASY ----
+func NewGameEasy() *Game {
+	return newCustomGame(6, 7)
+}
+
+// ---- NORMAL ----
+func NewGameNormal() *Game {
+	return newCustomGame(6, 9)
+}
+
+// ---- HARD ----
+func NewGameHard() *Game {
+	return newCustomGame(7, 8)
+}
+
+// Fonction commune pour générer la grille
+func newCustomGame(rows, cols int) *Game {
+	board := make([][]int, rows)
 	for i := range board {
-		board[i] = make([]int, 7)
+		board[i] = make([]int, cols)
 	}
-	g := &Game{
+	return &Game{
 		Board:         board,
-		CurrentPlayer: Player1,
+		CurrentPlayer: 1,
 		Winner:        0,
 	}
-	rand.Seed(time.Now().UnixNano())
-	g.placeRandomBlocks(3)
-	return g
 }
 
 func (g *Game) PlayMove(col int) bool {
@@ -38,7 +44,7 @@ func (g *Game) PlayMove(col int) bool {
 		return false
 	}
 	for row := len(g.Board) - 1; row >= 0; row-- {
-		if g.Board[row][col] == Empty {
+		if g.Board[row][col] == 0 {
 			g.Board[row][col] = g.CurrentPlayer
 			if g.checkWin(row, col) {
 				g.Winner = g.CurrentPlayer
@@ -51,12 +57,13 @@ func (g *Game) PlayMove(col int) bool {
 }
 
 func (g *Game) switchPlayer() {
-	if g.CurrentPlayer == Player1 {
-		g.CurrentPlayer = Player2
+	if g.CurrentPlayer == 1 {
+		g.CurrentPlayer = 2
 	} else {
-		g.CurrentPlayer = Player1
+		g.CurrentPlayer = 1
 	}
 }
+
 func (g *Game) checkWin(r, c int) bool {
 	player := g.Board[r][c]
 	directions := [][2]int{{0, 1}, {1, 0}, {1, 1}, {1, -1}}
@@ -85,38 +92,4 @@ func (g *Game) countDirection(r, c, dr, dc, player int) int {
 		count++
 	}
 	return count
-}
-func (g *Game) placeRandomBlocks(n int) {
-	placed := 0
-	rows := len(g.Board)
-	cols := len(g.Board[0])
-	for placed < n {
-		r := rand.Intn(rows-1) + 1 // de 1..rows-1 (évite la ligne 0)
-		c := rand.Intn(cols)
-		if g.Board[r][c] == Empty {
-			g.Board[r][c] = Blocked
-			placed++
-		}
-	}
-}
-func (g *Game) IsAIsTurn() bool {
-	return g.CurrentPlayer == Player2 && g.Winner == 0
-}
-func (g *Game) AIPlay() {
-	valid := g.validMoves()
-	if len(valid) == 0 {
-		return
-	}
-	col := valid[rand.Intn(len(valid))]
-	_ = g.PlayMove(col)
-}
-func (g *Game) validMoves() []int {
-	res := []int{}
-	cols := len(g.Board[0])
-	for c := 0; c < cols; c++ {
-		if g.Board[0][c] == Empty {
-			res = append(res, c)
-		}
-	}
-	return res
 }
