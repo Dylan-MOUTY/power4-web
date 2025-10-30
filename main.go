@@ -2,7 +2,9 @@ package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
+	"strconv"
 
 	"power-4/game"
 )
@@ -10,73 +12,44 @@ import (
 var currentGame *game.Game
 
 func main() {
-	// Routes
-	http.HandleFunc("/", handlePage1)      // page d'accueil : choix du niveau
-	http.HandleFunc("/start", handleStart) // création partie selon le niveau
-	http.HandleFunc("/game", handleIndex)  // affichage de la grille
-	http.HandleFunc("/play", handlePlay)   // jouer un coup
-	http.HandleFunc("/reset", handleReset) // recommencer la partie
+	currentGame = game.NewGame()
 
-	// Démarrer le serveur
-	http.ListenAndServe(":8080", nil)
+	http.HandleFunc("/", handleIndex)
+	http.HandleFunc("/game", handleGame)
+	http.HandleFunc("/play", handlePlay)
+	http.HandleFunc("/reset", handleReset)
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	log.Println("Serveur lancé sur http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-// Page d'accueil (Page1.html)
-func handlePage1(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/Page1.html"))
-	tmpl.Execute(w, nil)
-}
-
-// Démarrage d'une nouvelle partie selon le niveau choisi
-func handleStart(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		level := r.FormValue("level")
-		switch level {
-		case "easy":
-			currentGame = game.NewGame(6, 7)
-		case "normal":
-			currentGame = game.NewGame(6, 9)
-		case "hard":
-			currentGame = game.NewGame(7, 8)
-		default:
-			currentGame = game.NewGame(6, 7)
-		}
-	}
-	http.Redirect(w, r, "/game", http.StatusSeeOther)
-}
-
-// Page principale du jeu (index.html)
 func handleIndex(w http.ResponseWriter, r *http.Request) {
-	if currentGame == nil {
-		currentGame = game.NewGame(6, 7) // par défaut
+	tmpl := template.Must(template.ParseFiles("templates/Page1.html"))
+	if err := tmpl.Execute(w, currentGame); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func handleGame(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html"))
-	tmpl.Execute(w, currentGame)
+	if err := tmpl.Execute(w, currentGame); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
 
-// Quand le joueur joue un coup
 func handlePlay(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost && currentGame != nil {
-		col := r.FormValue("column")
-		column := 0
-		for _, c := range col {
-			column = int(c - '0')
+	if r.Method == http.MethodPost {
+		colStr := r.FormValue("column")
+		col, err := strconv.Atoi(colStr)
+		if err == nil {
+			currentGame.PlayMove(col)
 		}
-		currentGame.PlayMove(column)
 	}
 	http.Redirect(w, r, "/game", http.StatusSeeOther)
 }
 
-// Réinitialisation de la partie (même niveau qu'avant)
 func handleReset(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
-		if currentGame != nil {
-			rows := len(currentGame.Board)
-			cols := len(currentGame.Board[0])
-			currentGame = game.NewGame(rows, cols)
-		} else {
-			currentGame = game.NewGame(6, 7)
-		}
-	}
-	http.Redirect(w, r, "/game", http.StatusSeeOther)
+	currentGame = game.NewGame()
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
