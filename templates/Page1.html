@@ -1,88 +1,75 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Styled Link as Button with Background Video</title>
+  <meta charset="utf-8">
+  <title>Power4 — Choix du niveau</title>
   <style>
-      @font-face {
-         font-family: "Persona Non Grata";
-         src: url("/assets/style/Persona Non Grata.woff2") format("woff2"),
-              url("/assets/style/Persona Non Grata.woff") format("woff"),
-              url("/assets/style/Persona Non Grata.ttf") format("truetype");
-         font-weight: 100 900;
-         font-style: normal;
-         font-display: swap;
-       }
-
-       /* Appliquer la police partout (inclut headings et boutons) */
-       .button-class, body {
-            font-family: "Persona Non Grata", Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-       }
-
-    /* --- STYLE DE LA VIDÉO DE FOND --- */
-    #fondquibrille {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      z-index: -1;
-      object-fit: cover;
-      filter: brightness(70%); /* légèrement assombrie pour bien lire le texte */
-    }
-
-    /* --- STYLE DU BOUTON --- */
-    .button-class {
-      background-color: #000000;
-      border: none;
-      color: white;
-      padding: 30px 60px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 40px;
-      margin: 10px 5px;
-      cursor: pointer;
-      border-radius: 4px;
-      position: relative;
-      z-index: 1; /* pour que le bouton reste visible au-dessus de la vidéo */
-    }
-
-    /* --- CENTRAGE DU BOUTON --- */
     body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #fafafa;
+      text-align: center;
+    }
+
+    .card {
+      display: inline-block;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      background-color: #ffffff;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #222;
+    }
+
+    p {
+      color: #555;
+    }
+
+    .levels {
+      margin-top: 25px;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: sans-serif;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ---- Boutons blancs ---- */
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 2px solid #333;
+      border-radius: 8px;
+      background-color: #0b0a0a;       /* fond blanc */
+      color: #f7f3f3;                  /* texte noir */
+      transition: 0.2s ease;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background-color: #f1f1f1;    /* gris clair au survol */
+      color: #007BFF;               /* texte bleu au survol */
+      border-color: #007BFF;
+    }
+
+    button:active {
+      transform: scale(0.98);
     }
   </style>
 </head>
-
 <body>
-<form action="/action_page.php">
-  <label for="j1">Joueur 1:</label>
-  <input type="text" id="j1" name="j1"><br><br>
-  <label for="j2">Joueur 2:</label>
-  <input type="text" id="j2" name="j2"><br><br>
-  <input type="submit" value="Submit">
-</form>
+  <div class="card">
+    <h1>Puissance 4 — Choix du niveau</h1>
+    <p>Sélectionne un niveau de difficulté :</p>
 
-  <!-- Vidéo de fond -->
-    <video autoplay muted loop id="fondquibrille" style="position:fixed;top:0;left:0;min-width:100%;min-height:100%;z-index:-1;">
-  <source src="assets/video/fondquibrille.mp4" type="video/mp4">
-</video>
-
-  </video>
-
-  <!-- Bouton -->
-  <a href="/game" class="button-class">Jouer</a>
-
+    <form method="post" action="/start" class="levels">
+      <button type="submit" name="level" value="easy">🎯 Facile — 6×7</button>
+      <button type="submit" name="level" value="normal">⚙️ Normal — 6×9</button>
+      <button type="submit" name="level" value="hard">🔥 Difficile — 7×8</button>
+    </form>
+  </div>
 </body>
+</html>

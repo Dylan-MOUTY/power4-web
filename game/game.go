@@ -1,19 +1,31 @@
 package game
 
 type Game struct {
-	Board         [][]int // 0 = vide, 1 = joueur1, 2 = joueur2
+	Board         [][]int
 	CurrentPlayer int
 	Winner        int
 }
 
-func NewGame() *Game {
-	board := make([][]int, 6)
+func NewGame(rows, cols int) *Game {
+	board := make([][]int, rows)
 	for i := range board {
-		board[i] = make([]int, 7)
+		board[i] = make([]int, cols)
 	}
 	return &Game{
 		Board:         board,
 		CurrentPlayer: 1,
+	}
+}
+
+func newCustomGame(rows, cols int) *Game {
+	board := make([][]int, rows)
+	for i := range board {
+		board[i] = make([]int, cols)
+	}
+	return &Game{
+		Board:         board,
+		CurrentPlayer: 1,
+		Winner:        0,
 	}
 }
 
@@ -41,6 +53,7 @@ func (g *Game) switchPlayer() {
 		g.CurrentPlayer = 1
 	}
 }
+
 func (g *Game) checkWin(r, c int) bool {
 	player := g.Board[r][c]
 	directions := [][2]int{{0, 1}, {1, 0}, {1, 1}, {1, -1}}

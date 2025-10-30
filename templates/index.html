@@ -14,7 +14,6 @@
          font-display: swap;
        }
 
-       /* Appliquer la police partout (inclut headings et boutons) */
        body, h1, h2, table, td, button {
             font-family: "Markin-LT-Ultra-Bold", Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
@@ -44,11 +43,34 @@
             padding: 0;
             margin: 0;
             position: relative;
+            overflow: hidden;
         }
         .p1 { background-color: rgb(169, 7, 7); }
         .p2 { background-color: rgb(190, 221, 17); }
 
-        
+        /* style pour case bloquée (Blocked = 3) */
+        .blocked {
+            background: repeating-linear-gradient(
+              45deg,
+              #aaa,
+              #aaa 6px,
+              #888 6px,
+              #888 12px
+            );
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
+        }
+        .blocked-mark {
+            position: absolute;
+            inset: 0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:700;
+            color: rgba(0,0,0,0.55);
+            font-size: 20px;
+            pointer-events: none;
+        }
+
         form {
             margin: 0;
             padding: 0;
@@ -64,7 +86,7 @@
             cursor: pointer;
         }
         .col-button:hover {
-            background: rgba(0,0,0,0.1);
+            background: rgba(0,0,0,0.08);
         }
 
         button:focus {
@@ -83,7 +105,32 @@
             background-position: center;  
             height: 10vh;                
             margin: 0;
+            font-size: 2.5rem;
+            margin: 20px 0 40px;
+            color: #ffffff;
         }
+
+        /* légende */
+        .legend {
+            display:flex;
+            gap:12px;
+            justify-content:center;
+            margin-top:12px;
+            color:#fff;
+        }
+        .legend .item {
+            display:flex;
+            gap:8px;
+            align-items:center;
+            font-size:14px;
+        }
+        .dot {
+            width:18px; height:18px; border-radius:50%; border:2px solid #0d0d0d;
+        }
+        .dot.blocked { background: repeating-linear-gradient(45deg,#aaa,#aaa 6px,#888 6px,#888 12px); }
+        .dot.p1 { background: rgb(169, 7, 7); }
+        .dot.p2 { background: rgb(190, 221, 17); }
+
     </style>
 </head>
 <body>
@@ -102,15 +149,25 @@
         {{range $i, $row := .Board}}
         <tr>
             {{range $j, $cell := $row}}
-                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{end}}">
-                    <form action="/play" method="post">
-                        <input type="hidden" name="column" value="{{$j}}">
-                        <button type="submit" class="col-button"></button>
-                    </form>
+                <td class="{{if eq $cell 1}}p1{{else if eq $cell 2}}p2{{else if eq $cell 3}}blocked{{end}}">
+                    {{if eq $cell 3}}
+                        <div class="blocked-mark">✖</div>
+                    {{else}}
+                        <form action="/play" method="post">
+                            <input type="hidden" name="column" value="{{$j}}">
+                            <button type="submit" class="col-button" aria-label="jouer colonne {{$j}}"></button>
+                        </form>
+                    {{end}}
                 </td>
             {{end}}
         </tr>
         {{end}}
     </table>
+
+    <div class="legend" aria-hidden="true">
+        <div class="item"><div class="dot p1"></div> Joueur 1</div>
+        <div class="item"><div class="dot p2"></div> Joueur 2</div>
+        <div class="item"><div class="dot blocked"></div> Case bloquée</div>
+    </div>
 </body>
 </html>
