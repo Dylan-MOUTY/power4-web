@@ -6,27 +6,17 @@ type Game struct {
 	Winner        int
 }
 
-// Fonction appelée par défaut
-func NewGame() *Game {
-	return NewGameEasy()
+func NewGame(rows, cols int) *Game {
+	board := make([][]int, rows)
+	for i := range board {
+		board[i] = make([]int, cols)
+	}
+	return &Game{
+		Board:         board,
+		CurrentPlayer: 1,
+	}
 }
 
-// ---- EASY ----
-func NewGameEasy() *Game {
-	return newCustomGame(6, 7)
-}
-
-// ---- NORMAL ----
-func NewGameNormal() *Game {
-	return newCustomGame(6, 9)
-}
-
-// ---- HARD ----
-func NewGameHard() *Game {
-	return newCustomGame(7, 8)
-}
-
-// Fonction commune pour générer la grille
 func newCustomGame(rows, cols int) *Game {
 	board := make([][]int, rows)
 	for i := range board {
