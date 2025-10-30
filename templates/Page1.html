@@ -1,75 +1,52 @@
 <!doctype html>
-<html lang="fr">
+<html>
 <head>
   <meta charset="utf-8">
   <title>Power4 — Choix du niveau</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      background-color: #fafafa;
-      text-align: center;
-    }
-
+    body { font-family: Arial, sans-serif; padding: 30px; text-align:center; background-color:#fafafa; }
     .card {
-      display: inline-block;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      max-width: 420px;
+      margin: auto;
+      background: #fff;
     }
-
-    h1 {
-      margin-bottom: 20px;
-      font-size: 2rem;
-      color: #222;
-    }
-
-    p {
-      color: #555;
-    }
-
-    .levels {
-      margin-top: 25px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    /* ---- Boutons blancs ---- */
+    h1 { margin-bottom: 20px; color:#222; }
     button {
-      padding: 12px 20px;
+      padding: 10px 16px;
       font-size: 16px;
       cursor: pointer;
-      border: 2px solid #333;
-      border-radius: 8px;
-      background-color: #0b0a0a;       /* fond blanc */
-      color: #f7f3f3;                  /* texte noir */
-      transition: 0.2s ease;
-      font-weight: 600;
+      border-radius: 6px;
+      border: 2px solid #000;
+      background-color: #fff; /* fond blanc */
+      color: #000;            /* texte noir */
+      transition: 0.2s;
+      margin-top: 8px;
+      width: 220px;
     }
-
     button:hover {
-      background-color: #f1f1f1;    /* gris clair au survol */
-      color: #007BFF;               /* texte bleu au survol */
-      border-color: #007BFF;
-    }
-
-    button:active {
-      transform: scale(0.98);
+      background-color: #f1f1f1;
+      color: #007bff;
+      border-color: #007bff;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Puissance 4 — Choix du niveau</h1>
-    <p>Sélectionne un niveau de difficulté :</p>
+    <h1>Power4</h1>
+    <p><strong>Choisis ton niveau de difficulté :</strong></p>
 
-    <form method="post" action="/start" class="levels">
-      <button type="submit" name="level" value="easy">🎯 Facile — 6×7</button>
-      <button type="submit" name="level" value="normal">⚙️ Normal — 6×9</button>
-      <button type="submit" name="level" value="hard">🔥 Difficile — 7×8</button>
+    <form method="post" action="/start">
+      <button type="submit" name="level" value="easy">🎯 Facile (6×7)</button><br>
+      <button type="submit" name="level" value="normal">⚙️ Normal (6×9)</button><br>
+      <button type="submit" name="level" value="hard">🔥 Difficile (7×8)</button>
     </form>
+
+    <p style="margin-top:12px">
+      <a href="/game">Aller à la partie en cours</a>
+    </p>
   </div>
 </body>
 </html>
