@@ -5,10 +5,10 @@
     <title>Puissance 4 Web</title>
     <style>
        @font-face {
-         font-family: "Persona Non Grata";
-         src: url("/assets/style/Persona Non Grata.woff2") format("woff2"),
-              url("/assets/style/Persona Non Grata.woff") format("woff"),
-              url("/assets/style/Persona Non Grata.ttf") format("truetype");
+         font-family: "Markin-LT-Ultra-Bold";
+         src: url("/assets/style/Markin-LT-Ultra-Bold.woff2") format("woff2"),
+              url("/assets/style/Markin-LT-Ultra-Bold.woff") format("woff"),
+              url("/assets/style/Markin-LT-Ultra-Bold.ttf") format("truetype");
          font-weight: 100 900;
          font-style: normal;
          font-display: swap;
@@ -16,7 +16,7 @@
 
        /* Appliquer la police partout (inclut headings et boutons) */
        body, h1, h2, table, td, button {
-            font-family: "Persona Non Grata", Arial, sans-serif;
+            font-family: "Markin-LT-Ultra-Bold", Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
        }
@@ -76,14 +76,18 @@
             color: #ffffff;
         }
         h2 {
-            font-size: 2.5rem;
-            margin: 20px 0 40px;
-            color: #ffffff
+            text-align: center;
+            background-image: url("/assets/static/Puissance4_Logo.png");
+            background-size: cover;       
+            background-repeat: no-repeat; 
+            background-position: center;  
+            height: 10vh;                
+            margin: 0;
         }
     </style>
 </head>
 <body>
-    <h1>Puissance 4</h1>
+    <h1><img src="Puissance4_Logo.png" alt="Puissance 4 Logo" width="50px" height="50px"></h1>
 
     {{if .Winner}}
         <h2>🎉 Joueur {{.Winner}} a gagné ! YOU ARE THE BEST !</h2>
