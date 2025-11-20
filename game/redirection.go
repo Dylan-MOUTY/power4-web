@@ -81,3 +81,4 @@ func openBrowser(url string) {
 		fmt.Println("💡 Ouvre ton navigateur sur :", url)
 	}
 }
+d
