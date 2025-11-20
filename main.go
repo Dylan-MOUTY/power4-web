@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	handlers.RegisterRoutes()
+	redirection.RegisterRoutes()
 	fmt.Println("🚀 Serveur lancé sur http://localhost:7070/")
 	log.Fatal(http.ListenAndServe(":7070", nil))
 }
