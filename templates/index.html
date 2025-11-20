@@ -23,17 +23,19 @@
         body {
             text-align: center;
             background-image: url("/assets/static/background_power4.png");
-            background-size: cover;       
-            background-repeat: no-repeat; 
-            background-position: center;  
-            height: 100vh;                
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100vh;
             margin: 0;
         }
+
         table {
             margin: auto;
             border-collapse: collapse;
             cursor: pointer;
         }
+
         td {
             width: 70px;
             height: 70px;
@@ -45,10 +47,10 @@
             position: relative;
             overflow: hidden;
         }
+
         .p1 { background-color: rgb(218, 8, 8); }
         .p2 { background-color: rgb(97, 95, 95); }
 
-        /* style pour case bloquée (Blocked = 3) */
         .blocked {
             background: repeating-linear-gradient(
               45deg,
@@ -59,6 +61,7 @@
             );
             box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
         }
+
         .blocked-mark {
             position: absolute;
             inset: 0;
@@ -75,6 +78,7 @@
             margin: 0;
             padding: 0;
         }
+
         .col-button {
             position: absolute;
             top: 0;
@@ -85,6 +89,7 @@
             border: none;
             cursor: pointer;
         }
+
         .col-button:hover {
             background: rgba(0,0,0,0.08);
         }
@@ -92,25 +97,19 @@
         button:focus {
             outline: none;
         }
+
+        /* --- NOUVEAU STYLE H1 --- */
         h1 {
             text-align: center;
-            background-image: url("/assets/static/Puissance4_Logo.png");
-            background-size: cover;       
-            background-repeat: no-repeat; 
-            background-position: center;  
-            height: 20vh;                
-            margin: 0;
-            font-size: 2.5rem;
             margin: 10px 0 15px;
-            color: #ffffff;
         }
+
         h2 {
             font-size: 4rem;
             margin: 30px 0 40px;
             color: #ffffff;
         }
 
-        /* légende */
         .legend {
             display:flex;
             gap:12px;
@@ -118,23 +117,33 @@
             margin-top:12px;
             color:#fff;
         }
+
         .legend .item {
             display:flex;
             gap:8px;
             align-items:center;
             font-size:14px;
         }
+
         .dot {
             width:18px; height:18px; border-radius:50%; border:2px solid #0d0d0d;
         }
-        .dot.blocked { background: repeating-linear-gradient(45deg,#aaa,#aaa 6px,#888 6px,#888 12px); }
+
+        .dot.blocked { 
+            background: repeating-linear-gradient(45deg,#aaa,#aaa 6px,#888 6px,#888 12px);
+        }
+
         .dot.p1 { background: rgb(218, 8, 8); }
         .dot.p2 { background: rgb(97, 95, 95); }
 
     </style>
 </head>
 <body>
-    <h1><img src="Puissance4_Logo.png" width="20px" height="15px"></h1>
+
+    <!-- LOGO RÉDUIT -->
+    <h1>
+        <img src="/assets/static/Puissance4_Logo.png" style="width:280px; height:auto;">
+    </h1>
 
     {{if .Winner}}
         <h2>🎉 Joueur {{.Winner}} a gagné ! YOU ARE THE BEST !</h2>
@@ -168,5 +177,6 @@
         <div class="item"><div class="dot p1"></div> Joueur 1</div>
         <div class="item"><div class="dot p2"></div> Joueur 2</div>
     </div>
+
 </body>
 </html>

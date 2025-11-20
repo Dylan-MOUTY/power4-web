@@ -26,11 +26,11 @@ func main() {
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	url := "http://localhost:8080/"
+	url := "http://localhost:7070/"
 	fmt.Println("🚀 Serveur lancé sur :", url)
 	openBrowser(url) // ouvre automatiquement ton navigateur
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":7070", nil))
 }
 
 // --------------------- HANDLERS ---------------------
