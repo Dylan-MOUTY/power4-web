@@ -17,7 +17,7 @@ func NewGame(rows, cols int) *Game {
 	}
 }
 
-func newCustomGame(rows, cols int) *Game {
+func NewCustomGame(rows, cols int) *Game {
 	board := make([][]int, rows)
 	for i := range board {
 		board[i] = make([]int, cols)
