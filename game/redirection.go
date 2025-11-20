@@ -1,4 +1,4 @@
-package redirection
+package game
 
 import (
 	"fmt"
