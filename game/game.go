@@ -83,4 +83,3 @@ func (g *Game) countDirection(r, c, dr, dc, player int) int {
 	}
 	return count
 }
-a
